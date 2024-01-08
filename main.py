@@ -1,6 +1,10 @@
 from typing import Optional
-
 from fastapi import FastAPI
+from nicegui import ui
+from matplotlib import pyplot as plt
+import numpy as np
+import random
+
 
 app = FastAPI()
 
