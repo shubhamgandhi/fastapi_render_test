@@ -11,6 +11,8 @@ app = FastAPI()
 
 @app.get("/")
 async def root():
+    ui.label('Clairvoyance').style('color: #6E93D6; font-size: 200%; font-weight: 300')
+    
     return {"message": "Hello World"}
 
 @app.get("/items/{item_id}")
