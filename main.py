@@ -1,20 +1,33 @@
 from typing import Optional
 from fastapi import FastAPI
-from nicegui import ui
+from nicegui import ui, app
 from matplotlib import pyplot as plt
 import numpy as np
 import random
 
+def init(fastapi_app: FastAPI) -> None:
+    @ui.page('/show')
+    def show():
+        ui.label('Hello, FastAPI!')
+
+        # NOTE dark mode will be persistent for each user across tabs and server restarts
+        ui.dark_mode().bind_value(app.storage.user, 'dark_mode')
+        ui.checkbox('dark mode').bind_value(app.storage.user, 'dark_mode')
+
+    ui.run_with(
+        fastapi_app,
+        storage_secret='pick your private secret here',  # NOTE setting a secret is optional but allows for persistent storage per user
+    )
 
 app = FastAPI()
 
 
-@app.get("/")
-async def root():
-    ui.label('Clairvoyance').style('color: #6E93D6; font-size: 200%; font-weight: 300')
-    ui.run(on_air=False)
-    return {"message": "Hello World"}
+@app.get('/')
+def read_root():
+    return {'Hello': 'World'}
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Optional[str] = None):
-    return {"item_id": item_id, "q": q}
+
+frontend.init(app)
+
+if __name__ == '__main__':
+    print('Please start the app with the "uvicorn" command as shown in the start.sh script')
