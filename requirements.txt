@@ -1,1 +1,5 @@
 fastapi[all]
+matplotlib
+numpy
+random
+nicegui
